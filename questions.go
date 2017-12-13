@@ -37,14 +37,14 @@ var ghostLoginQuestions = []*survey.Question{
 	{
 		Name: "username",
 		Prompt: &survey.Input{
-			Message: "Ghost username"
-		}
+			Message: "Ghost username",
+		},
 	},
 	{
 		Name: "password",
 		Prompt: &survey.Password{
-			Message: "Ghost password"
-		}
+			Message: "Ghost password",
+		},
 	},
 }
 
@@ -52,8 +52,8 @@ var ghostTokenQuestions = []*survey.Question{
 	{
 		Name: "token",
 		Prompt: &survey.Password{
-			Message: "Ghost API Token"
-		}
+			Message: "Ghost API Token",
+		},
 	},
 }
 
