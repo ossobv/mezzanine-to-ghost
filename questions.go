@@ -48,6 +48,15 @@ var ghostLoginQuestions = []*survey.Question{
 	},
 }
 
+var ghostTokenQuestions = []*survey.Question{
+	{
+		Name: "token",
+		Prompt: &survey.Password{
+			Message: "Ghost API Token"
+		}
+	},
+}
+
 func askMezzanineDetails() (map[string]string, error) {
 	questions := mezzanineQuestions
 	answers := struct {
