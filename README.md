@@ -32,4 +32,4 @@ You'll be prompted for URLs, login details and/or API keys
 
 ## It doesn't work
 
-Create an [issue](https://github.com/ossobv/mezzanine-to-ghost/issues) and we'll help you
+Create an [issue](https://github.com/ossobv/mezzanine-to-ghost/issues/new) and we'll help you
