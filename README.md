@@ -13,8 +13,8 @@ Transform your old legacy blog running atop [Mezzanine](https://github.com/steph
 -   ~~[Mezzanine API](https://github.com/gcushen/mezzanine-api) installed and configured on your Mezzanine CMS/blog~~
 -   ~~Login details of a Mezzanine superuser or a [OAuth2 key from the Mezzanine API](https://gcushen.github.io/mezzanine-api/authentication/#oauth2-authentication)~~
 -   ~~Login details of a Ghost admin user or a [Ghost API Bearer Token](https://api.ghost.org/docs/user-authentication)~~
--   Access to the Mezzanine CMS/blog's database
--   Access to the Ghost blog's database
+-   Access to the Mezzanine CMS/blog's database (currently only MySQL/MariaDB is supported)
+-   Access to the Ghost blog's database (currently only MySQL/MariaDB is supported)
 
 Make sure **$GOPATH/bin** is in your **$PATH**!
 
