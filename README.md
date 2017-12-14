@@ -14,7 +14,7 @@ Transform your old legacy blog running atop [Mezzanine](https://github.com/steph
 -   Login details of a Mezzanine superuser or a [OAuth2 key from the Mezzanine API](https://gcushen.github.io/mezzanine-api/authentication/#oauth2-authentication)
 -   Login details of a Ghost admin user or a [Ghost API Bearer Token](https://api.ghost.org/docs/user-authentication)
 
-Make sure **$GOPATH**/bin is in your **$PATH**!
+Make sure **$GOPATH/bin** is in your **$PATH**!
 
 ## Installation
 
