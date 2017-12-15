@@ -44,8 +44,10 @@ func main() {
 	newPost := GhostBlogPost{}
 
 	for iter.Next(&oldPost) {
-		newPost.ID = string(bson.NewObjectId()) // This is what Ghost uses
-		newPost.UUID = uuid.NewV4().String()    // This is what Ghost uses
+		newPost.ID = fmt.Sprintf("%x", string(bson.NewObjectId())) // This is what Ghost uses
+		fmt.Printf("newPost.ID: %s", newPost.ID)
+
+		newPost.UUID = uuid.NewV4().String() // This is what Ghost uses
 		newPost.Title = oldPost.Title
 		newPost.Slug = oldPost.Slug.String
 
