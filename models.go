@@ -130,3 +130,26 @@ type GhostBlogPost struct {
 	TwitterDescription   sql.NullString `db:"twitter_description"`
 	CustomTemplate       sql.NullString `db:"custom_template"`
 }
+
+type GhostBlogPostTag struct {
+	ID              string         `db:"id"`
+	Name            string         `db:"name"`
+	Slug            string         `db:"slug"`
+	Description     sql.NullString `db:"description"`
+	FeatureImage    sql.NullString `db:"feature_image"`
+	ParentID        sql.NullString `db:"parent_id"`
+	Visibility      string         `db:"visibility"`
+	MetaTitle       sql.NullString `db:"meta_title"`
+	MetaDescription sql.NullString `db:"meta_description"`
+	CreatedAt       time.Time      `db:"created_at"`
+	CreatedBy       string         `db:"created_by"`
+	UpdatedAt       *time.Time     `db:"updated_at"`
+	UpdatedBy       sql.NullString `db:"updated_by"`
+}
+
+type GhostBlogPostTagPointer struct {
+	ID        string `db:"id"`
+	PostID    string `db:"post_id"`
+	TagID     string `db:"tag_id"`
+	SortOrder uint32 `db:"sort_order"`
+}
