@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/ossobv/ghostapi"
 	"github.com/satori/go.uuid"
 	"github.com/thanhpk/randstr"
 	"gopkg.in/mgo.v2/bson"
@@ -41,6 +42,33 @@ func main() {
 	}
 	defer ghostDB.Close()
 
+	now := time.Now()
+	apiUser := ghostapi.Client{
+		ID:        fmt.Sprintf("%x", string(bson.NewObjectId())),
+		UUID:      fmt.Sprintf("%s", UUID.NewV4()),
+		Name:      "mezzanine-to-ghost",
+		Slug:      "mezzanine-to-ghost",
+		Secret:    "lie7teCa",
+		Status:    "enabled",
+		Type:      "ua",
+		CreatedAt: now,
+		UpdatedAt: now,
+		CreatedBy: "1",
+	}
+
+	// Add API user for this application to Ghost database if not exist
+	if matches, err := ghostDB.Collection("clients").Find(db.Cond{"secret": apiUser.Secret, "name": apiUser.Name}).Count(); err != nil {
+		fmt.Println(err.Error())
+		return
+	} else {
+		if _, err := ghostDB.Collection("clients").Insert(&apiUser); err != nil {
+			fmt.Println(err.Error())
+			return
+		}
+	}
+
+	gstapi := ghostapi.Login(&apiUser)
+
 	// Key = User ID
 	// Value = User object
 	mezzanineUsers := map[int64]MezzanineUser{}
@@ -53,6 +81,8 @@ func main() {
 		mezzanineUsers[mznUser.ID] = mznUser
 	}
 
+	// Key = Mezzanine User ID
+	// Value = User object
 	ghostUsers := map[int64]GhostUser{}
 
 	var gstUser GhostUser
@@ -87,6 +117,7 @@ func main() {
 		// Generate random password
 
 		// First save user
+		// gstapi.CreateUser(&gstUser)
 		if _, err := ghostDB.Collection("users").Insert(&gstUser); err != nil {
 			iter.Close()
 
@@ -168,6 +199,7 @@ func main() {
 		newPost.Status = "published"
 		newPost.Visibility = "public"
 
+		// gstapi.CreatePost(&newPost)
 		if _, err = ghostDB.Collection("posts").Insert(&newPost); err != nil {
 			iter.Close()
 
@@ -186,7 +218,8 @@ func main() {
 		var newTagPointer GhostBlogPostTagPointer
 
 		for _, keyword := range oldTags {
-			// If user with the same slug/username already exists, we retrieve that user
+			// If tag already exists, we re-use that tag -- else we create one
+			// if gstapi.TagExists(keyword) { } else { }
 			if matches, err := ghostDB.Collection("tags").Find(db.Cond{"name": keyword}).Count(); matches > 0 || err != nil {
 				if err != nil {
 					iter.Close()
@@ -207,6 +240,7 @@ func main() {
 				newTag.UpdatedAt = oldPost.Updated
 				newTag.UpdatedBy = sql.NullString{String: newAuthor.ID, Valid: len(newAuthor.ID) > 0}
 
+				// gstapi.CreateTag(&newTag)
 				if _, err := ghostDB.Collection("tags").Insert(&newTag); err != nil {
 					iter.Close()
 
@@ -219,6 +253,7 @@ func main() {
 			newTagPointer.PostID = newPost.ID
 			newTagPointer.TagID = newTag.ID
 
+			// gstapi.CreateTag()
 			if _, err := ghostDB.Collection("posts_tags").Insert(&newTagPointer); err != nil {
 				iter.Close()
 
@@ -227,5 +262,6 @@ func main() {
 			}
 		}
 
+		// gstapi.CreatePost(&newPost)
 	}
 }
